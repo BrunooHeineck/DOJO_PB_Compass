@@ -33,7 +33,8 @@ router.get(
 	})
 );
 
-const cookies = { sameSite: 'none', secure: false, httpOnly: false };
+// const cookies = { sameSite: 'none', secure: false, httpOnly: false };
+const cookies = { sameSite: 'none', secure: true, httpOnly: false };
 // const cookies = { sameSite: 'strict', secure: false, httpOnly: false };
 // const cookies = { sameSite: 'strict', secure: true, httpOnly: true };
 // const cookies = { sameSite: 'lax', secure: false, httpOnly: false };
