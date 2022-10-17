@@ -1,0 +1,13 @@
+.showcase {
+	/* position: relative; */
+}
+
+.bg-image {
+	opacity: 0.7;
+}
+
+.bg-img-title {
+	/* position: absolute; */
+	top: 420px;
+	left: 20px;
+}
