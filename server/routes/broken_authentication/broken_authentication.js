@@ -1,14 +1,14 @@
 const router = require('express').Router();
 const { errHandling } = require('../../utils/utils');
 const cookieParser = require('cookie-parser');
-const { getUserById, updateUsername } = require('../../service/service');
+const { updateUsername, getUserById } = require('../../service/service');
 
 router.use(cookieParser());
 
 const renderData = {};
 
 router.get(
-	'/cookie_manipulation',
+	'/broken_authentication',
 	errHandling(async (req, res) => {
 		const { user_id } = req.cookies;
 		const usuarioNaoAutenticado = user_id == undefined;
@@ -18,28 +18,28 @@ router.get(
 		} else {
 			const { rows } = await getUserById(user_id);
 			renderData.username = rows[0].username;
-			res.render('cookie_manipulation', renderData);
+			renderData.user_id = user_id;
+			res.render('broken_authentication', renderData);
 		}
 	})
 );
 
 router.get(
-	'/cookie_manipulation/alterarusername',
+	'/broken_authentication/alterarusername',
 	errHandling(async (req, res) => {
-		//CRIA A VARIAVEI COM BASE NO QUE VEIO NA URL
-		const { novo_username } = req.query;
-		//CRIA A VARIAVEI COM BASE NO QUE ESTA NOS COOKIES
-		const { user_id } = req.cookies;
+		//CRIA A VARIAVEL COM BASE NO QUE VEIO NA URL
+		const { id: user_id, novo_username } = req.query;
+		renderData.user_id = user_id;
 		//BUSCA NO BANCO DE DADOS SE O USUARIO EXISTE
 		const { rows } = await getUserById(user_id);
 		const userExiste = rows.length == 1;
 		if (userExiste) {
 			const { rows } = await updateUsername(novo_username, user_id);
 			renderData.username = rows[0].username;
-			res.render('cookie_manipulation', renderData);
+			res.render('broken_authentication', renderData);
 		} else {
 			renderData.username = 'User_id_not_found';
-			res.render('cookie_manipulation', renderData);
+			res.render('broken_authentication', renderData);
 		}
 	})
 );

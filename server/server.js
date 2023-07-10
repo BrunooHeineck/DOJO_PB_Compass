@@ -2,6 +2,8 @@ const { urlencoded } = require('express');
 const express = require('express');
 const app = express();
 const path = require('path');
+const { createFakeUser } = require('./utils/utils');
+const { createTables } = require('./data/data_utils');
 const connectionTest = require('./config/database').connectionTest;
 
 app.use(express.json());
@@ -23,16 +25,16 @@ app.use('/', require('./routes/sqli/sqli'));
 app.use('/', require('./routes/xss/xss_armazenado'));
 app.use('/', require('./routes/xss/xss_refletido'));
 
-//broken_autentication
-app.use('/', require('./routes/broken_authentication/broken_autentication'));
+//broken_authentication
+app.use('/', require('./routes/broken_authentication/broken_authentication'));
 
-//cookie_manipulation
-app.use('/', require('./routes/cookie_manipulation/cookie_manipulation'));
+//broken_authentication II
+app.use('/', require('./routes/broken_authentication_II/broken_authentication_II'));
 
-//idor
-app.use('/', require('./routes/idor/idor'));
+//broken_authentication III
+app.use('/', require('./routes/broken_authentication_III/broken_authentication_III'));
 
-app.use('/', require('./tests/mock/fakeRouter'));
+app.use('/', require('./utils/aux_router'));
 
 app.use(express.static(__dirname + '/views'));
 app.set('views', path.join(__dirname, 'views'));
@@ -55,7 +57,12 @@ app.use((err, req, res, next) => {
 
 //Linsten
 const porta = process.env.PORT || 3000;
-app.listen(porta, () => {
+app.listen(porta, async () => {
 	console.log(`Sevidor Rodando na porta ${porta} => ${__dirname}`);
-	connectionTest();
+	await connectionTest();
+	const existeUsuario = await createTables()
+
+	if (!existeUsuario) {
+		createFakeUser()
+	}
 });

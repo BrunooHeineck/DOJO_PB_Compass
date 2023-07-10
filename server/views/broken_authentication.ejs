@@ -13,18 +13,17 @@
 	<!-- Manual CSS -->
 	<link href="../styles/signin.css" rel="stylesheet" />
 
-	<title>Cross-site Request Forgery (CSRF)</title>
+	<title>Broken Autentication</title>
 </head>
 
 <body class="bg-dark h-100 text-light" id="body">
 	<main class="form-signin justify-content-center align-items-center">
-		<h1 class="h1 mb-3 fw-normal">
-			Cross-site Request Forgery (CSRF) - POST
-		</h1>
-		<form id="form" action="/csrf-post/alterarusername" method="post" class="text-dark">
+		<h1 class="h1 mb-3 fw-normal">Broken Autentication</h1>
+		<form id="form" action="/broken_authentication/alterarusername" method="get" class="text-dark">
 			<h2 class="h5 mb-3 fw-normal text-light">
 				Seu username é: <%-username%>
 			</h2>
+			<input type="text" name="id" id="id" value="<%-user_id%>" hidden />
 			<div class="form-floating text-dark mb-1">
 				<input type="username" class="form-control" id="username" name="novo_username" placeholder="user.name"
 					required />

@@ -9,7 +9,7 @@ router.use(cookieParser());
 const renderData = {};
 
 router.get(
-	'/idor',
+	'/broken_authentication_III',
 	errHandling(async (req, res) => {
 		const { user_id } = req.cookies;
 		const usuarioNaoAutenticado = user_id == undefined;
@@ -17,20 +17,20 @@ router.get(
 		if (usuarioNaoAutenticado) {
 			res.redirect('/user-not-authenticated');
 		} else {
-			res.redirect(`idor/notas/${user_id}`);
+			res.redirect(`broken_authentication_III/notas/${user_id}`);
 		}
 	})
 );
 
 router.get(
-	'/idor/notas/*',
+	'/broken_authentication_III/notas/*',
 	errHandling(async (req, res) => {
 		const user_id = req.originalUrl.split('/')[3];
 
 		if (!isNaN(parseInt(user_id))) {
 			const { rows } = await getNotasByUserId(user_id);
 			renderData.posts = rows;
-			res.render('idor', renderData);
+			res.render('broken_authentication_III', renderData);
 		} else {
 			res.redirect('/user-not-authenticated');
 		}

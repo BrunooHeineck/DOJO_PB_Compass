@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { errHandling, request } = require('../../utils/utils');
+const { errHandling } = require('../../utils/utils');
 const cookieParser = require('cookie-parser');
 const { render } = require('ejs');
 const { updateUsername, getUserById } = require('../../service/service');

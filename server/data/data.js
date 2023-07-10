@@ -1,4 +1,4 @@
-const dataBase = require('../config/database').pool;
+const dataBase = require('../config/connection').pool;
 
 exports.getUserById = async user_id => {
 	return await dataBase.query(
